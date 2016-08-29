@@ -75,6 +75,9 @@ target/
 # Idea
 .idea
 
+# python virtualenv envn
+venv
+
 #####=== OSX ===#####
 .DS_Store
 .AppleDouble
