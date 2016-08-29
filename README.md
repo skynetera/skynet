@@ -7,3 +7,4 @@
  - ceph
  - glusterfs
  - docker-machine
+ - rancher
