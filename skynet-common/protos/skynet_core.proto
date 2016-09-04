@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.skynet_core";
+option java_outer_classname = "SkynetProto";
+option objc_class_prefix = "HLW";
+
+package skynet_core;
+
+// The skynet service definition.
+service SkynetProto {
+
+  // Sends a heartbeat
+  rpc heartbeat (call) returns (reply) {}
+
+  rpc push (call) returns (reply) {}
+
+  rpc register (call) returns (reply) {}
+
+  rpc configs (call) returns (reply) {}
+
+}
+
+// The request message containing the user's name.
+message call {
+  string request_msg = 1;
+}
+
+// The response message containing the greetings
+message reply {
+  string reply_msg = 1;
+}
