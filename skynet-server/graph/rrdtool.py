@@ -146,7 +146,7 @@ class rrdtool(object):
 
 
 if __name__ == '__main__':
-    rrdtool = rrdtool(rrd_path='/home/whoami/py/SkynetEye/monitor/rrd')
+    rrdtool = rrdtool(rrd_path='/opt/rrd_data')
     args = 'cpu_user','cpu_system'
     # rrdtool.create('192.168.2.2',*args)
     while 1:

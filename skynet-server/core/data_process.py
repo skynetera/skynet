@@ -24,7 +24,7 @@ class DataProcess(object):
 
     def __init__(self):
         self.hosts = serializer.all_host_configs()
-        self.rrd_path = '/home/whoami/py/Skynet/monitor/rrd'
+        self.rrd_path = '/opt/rrd_data'
         self.rrdtool = rrdtool.rrdtool(self.rrd_path)
 
     def handle(self,msg):

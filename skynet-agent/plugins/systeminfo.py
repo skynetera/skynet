@@ -14,9 +14,9 @@ __author__ = 'whoami'
 """
 
 
-def run():
+def monitor():
     print("hello")
 
 
 if __name__ == "__main__":
-    run()
+    monitor()
