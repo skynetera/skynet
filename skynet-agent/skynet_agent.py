@@ -33,7 +33,7 @@ class SkynetAgent(object):
         config = self.skynet_agent.getConfigs('HostConfig::%s' % host_ip)
         if config:
             self.configs = pickle.loads(config)
-            print self.configs
+            # print self.configs
             return True
 
     def format_msg(self,key,value):

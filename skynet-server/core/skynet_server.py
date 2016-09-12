@@ -21,7 +21,7 @@ class SkynetServer(object):
     def __init__(self,ip,port):
         self.ip = ip
         self.port = port
-        self.skynet_server = SkynetServerProtoImpl(ip,port)  # init starting rpc skynet-server
+        self.skynet_proto = SkynetServerProtoImpl(ip,port)  # init starting rpc skynet-server
 
 if __name__ == '__main__':
     # serializer.flush_all_host_configs_into_redis()
