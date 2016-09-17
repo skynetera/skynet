@@ -26,9 +26,10 @@ def host_config_serializer(host_ip):
     }
     for group in hosts.monitored_groups:
         if host_ip in group.hosts:
-             #get all monitor plugins
+             # get all monitor plugins
             applied_services.extend(group.services)
-    #去重插件,不同模板可能出现重复监控监控插件
+    # 去重插件,不同模板可能出现重复 监控插件
+    # To the heavy plug-in, different templates may appear repeat monitor plug-ins
     applied_services = set(applied_services)
 
     for service in applied_services:
@@ -39,9 +40,9 @@ def host_config_serializer(host_ip):
                                              ]
     return configs
 
-def init_all_host_configs_into_client():
+def initialize_all_host_configs():
     applied_hosts = []
-    for group in hosts.monitored_groups:
+    for group in hosts.monitored_default_groups:
         applied_hosts.extend(group.hosts)
     applied_hosts = set(applied_hosts)
 
@@ -50,7 +51,7 @@ def init_all_host_configs_into_client():
         host_config = host_config_serializer(host_ip)
         key = 'HostConfig::%s' %host_ip
 
-        configs['configs'][key] = pickle.dumps(host_config)
+        configs['configs'][key] = pickle.dumps(host_config)  # pickle serializer
 
     return configs
 
@@ -69,17 +70,15 @@ def report_service_data(service_instance,msg):
     key = 'StatusData::%s' % host_ip
 
     # waring data put redis 3 hour
-    # service_instance.redis.set(key,pickle.dumps(service_instance.hosts['hosts'][host_ip]))
 
 def all_host_configs():
     configs = {'hosts':{}}
 
-    for group in hosts.monitored_groups:
+    for group in hosts.monitored_default_groups:
         for host_ip in group.hosts:
             configs['hosts'][host_ip] = {}
     return configs
 
 if __name__ == '__main__':
-    # print host_config_serializer('192.168.2.125')
-    #flush_all_host_configs_into_redis()
-    print init_all_host_configs_into_client()
+    # host_config_serializer('192.168.2.125')
+    print initialize_all_host_configs()

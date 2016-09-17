@@ -24,7 +24,7 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
     def __init__(self):
-        self.conf = serializer.init_all_host_configs_into_client()
+        self.conf = serializer.initialize_all_host_configs()
         self.data_process = DataProcess()
         print '[INFO] Init configs info...'
 
@@ -49,6 +49,7 @@ class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
             return skynet_core_pb2.reply(reply_msg='push data fail. time %s' % time.time())
 
     def register(self, request, context):
+        
         pass
 
 class SkynetServerProtoImpl(object):

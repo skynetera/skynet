@@ -24,6 +24,5 @@ class SkynetServer(object):
         self.skynet_proto = SkynetServerProtoImpl(ip,port)  # init starting rpc skynet-server
 
 if __name__ == '__main__':
-    # serializer.flush_all_host_configs_into_redis()
     ss = SkynetServer('0.0.0.0',50051)
     print '[INFO] Stoping skynet server %s' % time.time()

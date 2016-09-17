@@ -9,31 +9,33 @@ __author__ = 'whoami'
 @contact: skyneteye@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: skynet-skynet_agent.py
+@file: skynet_agent.py
 @time: 2015-11-28 下午12:44
 """
 
-import threading
-from skynet_agent_proto_impl import SkynetAgentProtoImpl
 import pickle
+import threading
 import time
+from SkynetConfig import SkynetConfig
+from SkynetLog import skynetLog
+from SkynetAgentProtoImpl import SkynetAgentProtoImpl
+import global_settings
 from plugins import plugin_api
 
-host_ip = '127.0.0.1'
+log = skynetLog(object_name=__file__).log()
 
 class SkynetAgent(object):
 
-    def __init__(self,server,port):
-        self.server = server
-        self.prot = port
-        self.configs = {}
-        self.skynet_agent = SkynetAgentProtoImpl()
+    def __init__(self,server_ip,server_port,skynet_config_path):
+        self.server_ip = server_ip
+        self.skynet_config = SkynetConfig(skynet_config_path)
+        self.plugins_configs = {}
+        self.skynet_agent = SkynetAgentProtoImpl(server_ip,server_port)
 
     def get_configs(self):
-        config = self.skynet_agent.getConfigs('HostConfig::%s' % host_ip)
+        config = self.skynet_agent.getConfigs('HostConfig::%s' % self.server_ip)
         if config:
-            self.configs = pickle.loads(config)
-            # print self.configs
+            self.plugins_configs = pickle.loads(config)  # pickle serializer
             return True
 
     def format_msg(self,key,value):
@@ -47,7 +49,7 @@ class SkynetAgent(object):
             #print 'going to monitor services--',self.configs
             while True:
                 after = time.time()
-                for service_name,val in self.configs['services'].items():
+                for service_name,val in self.plugins_configs['services'].items():
 
                     interval,plugin_name,last_check_time = val
 
@@ -57,11 +59,11 @@ class SkynetAgent(object):
                         t.start()
 
                         #update last check time
-                        self.configs['services'][service_name][2] = time.time()
+                        self.plugins_configs['services'][service_name][2] = time.time()
 
                     else:
                         next_run_time = interval-(time.time() - last_check_time)
-                        print '\033[32;1m%s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time)
+                        log.info('\033[32;1m%s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time))
 
                 time.sleep(5)
 
@@ -74,20 +76,20 @@ class SkynetAgent(object):
 
                     try:
                         if flag:
-                            print '\033[0;31;1m push>> push data success \033[0m'
+                            log.info('\033[0;31;1m push>> push data success \033[0m')
                             self.report_service_data.clear()
                     except Exception,e:
-                        print '%s ==> %s' %('push data fail',e.message)
+                        log.error('%s ==> %s' %('push data fail',e.message))
         else:
-            print '--could not found any configurations for this host....'
+            log.warn('could not found any configurations for this host....')
 
     def task(self,service_name,plugin_name):
-        print 'going to run service: %s %s ' %(service_name,plugin_name)
+        log.info('going to run service: %s %s ' %(service_name,plugin_name))
         func = getattr(plugin_api,plugin_name)
         result = func()
 
         self.report_service_data[service_name]={
-                                'ip':host_ip,
+                                'ip':self.server_ip,
                                 'service_name':service_name,
                                 'data':result
                                 }
@@ -95,6 +97,16 @@ class SkynetAgent(object):
     def run(self):
         self.handle()
 
+    def register(self):
+        print self.skynet_config.get('server','skynet_server_ip')
+
 if __name__ == '__main__':
-    agent = SkynetAgent('yourMonitorServerIp','port')
+
+    skynet_server_ip = '127.0.0.1'
+    skynet_server_port = 50051
+
+    config_file_path = '../conf/skynet-site.ini'
+
+    agent = SkynetAgent(skynet_server_ip,skynet_server_port,config_file_path)
+    agent.register()
     agent.run()

@@ -9,7 +9,7 @@ __author__ = 'whoami'
 @contact: skynet@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: skynet_agent_proto_impl.py
+@file: SkynetAgentProtoImpl.py
 @time: 2015-12-27 下午2:06
 """
 
@@ -17,10 +17,10 @@ __author__ = 'whoami'
 import grpc
 import skynet_core_pb2
 
-class SkynetAgentProtoImpl:
+class SkynetAgentProtoImpl(object):
 
-    def __init__(self):
-        self.channel = grpc.insecure_channel('localhost:50051')
+    def __init__(self,master_ip,master_port):
+        self.channel = grpc.insecure_channel('%s:%s' %(master_ip,master_port))
         self.stub = skynet_core_pb2.SkynetProtoStub(self.channel)
 
     def getConfigs(self,host_ip):
@@ -28,7 +28,7 @@ class SkynetAgentProtoImpl:
             response = self.stub.configs(skynet_core_pb2.call(request_msg=host_ip))
             return response.reply_msg
         except Exception,e:
-            print e.message,'connect skynet server timeout'
+            print e,'connect skynet server timeout'
 
     def push(self,msg):
         try:
@@ -37,6 +37,9 @@ class SkynetAgentProtoImpl:
             print e.message,'connect skynet server timeout'
 
     def jobs(self,task):
+        pass
+
+    def register(self):
         pass
 
 if __name__ == '__main__':

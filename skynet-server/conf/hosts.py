@@ -16,14 +16,17 @@ __author__ = 'whoami'
 import templates
 
 g1 = templates.LinuxTemplate()
-g1.group_name = 'Test groups'
-g1.hosts = ['127.0.0.1','192.168.2.125']
-
+g1.group_name = 'Linux Default Groups'
+g1.hosts = ['127.0.0.1']
 
 g2 = templates.NetworkTemplate()
-g2.group_name = 'pupper skynet server groups'
-g2.hosts = ['192.168.2.125','125.33.2.1']
+g2.group_name = 'Linux Network Groups'
+g2.hosts = ['127.0.0.1','192.168.2.125','125.33.2.1']
+
+monitored_default_groups = [
+    g1,g2
+]
 
 monitored_groups = [
-    g1,g2
+    g1
 ]

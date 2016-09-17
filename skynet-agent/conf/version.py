@@ -7,19 +7,8 @@
 @contact: skynet199@foxmail.com
 @site: http://www.itweet.cn
 @software: PyCharm
-@file: __init__.py.py
-@time: 2016-08-30 20:07
+@file: version.py
+@time: 2016-09-14 23:30
 """
-
-
-def func():
-    pass
-
-
-class Main():
-    def __init__(self):
-        pass
-
-
-if __name__ == '__main__':
-    pass
+VERSION = "0.0.1"
+RELEASE = "1.sm5.8.p0.7.el6"

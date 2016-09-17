@@ -24,7 +24,7 @@ def monitor(frist_invoke=1):
     f.close()
 
     for line in lines:
-        if '#' not in line and 'ext' in line:
+        if '#' not in line and 'ext' in line or 'xfs' in line:
             mount_dir = line.split()[1]
             type = line.split()[2]
 
