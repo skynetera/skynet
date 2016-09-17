@@ -18,7 +18,7 @@ import threading
 import time
 from SkynetConfig import SkynetConfig
 from SkynetLog import skynetLog
-from SkynetAgentProtoImpl import SkynetAgentProtoImpl
+from skynet_agent_proto_impl import SkynetAgentProtoImpl
 import global_settings
 from plugins import plugin_api
 
