@@ -18,7 +18,7 @@ import threading
 import time
 from SkynetConfig import SkynetConfig
 from SkynetLog import skynetLog
-from skynet_agent_proto_impl import SkynetAgentProtoImpl
+from skynetAgentProtoImpl import SkynetAgentProtoImpl
 import global_settings
 from plugins import plugin_api
 
@@ -29,13 +29,13 @@ class SkynetAgent(object):
     def __init__(self,server_ip,server_port,skynet_config_path):
         self.server_ip = server_ip
         self.skynet_config = SkynetConfig(skynet_config_path)
-        self.plugins_configs = {}
+        self.plugins_config = {}
         self.skynet_agent = SkynetAgentProtoImpl(server_ip,server_port)
 
     def get_configs(self):
         config = self.skynet_agent.getConfigs('HostConfig::%s' % self.server_ip)
         if config:
-            self.plugins_configs = pickle.loads(config)  # pickle serializer
+            self.plugins_config = pickle.loads(config)  # pickle serializer
             return True
 
     def format_msg(self,key,value):
@@ -49,7 +49,7 @@ class SkynetAgent(object):
             #print 'going to monitor services--',self.configs
             while True:
                 after = time.time()
-                for service_name,val in self.plugins_configs['services'].items():
+                for service_name,val in self.plugins_config['services'].items():
 
                     interval,plugin_name,last_check_time = val
 
@@ -59,7 +59,7 @@ class SkynetAgent(object):
                         t.start()
 
                         #update last check time
-                        self.plugins_configs['services'][service_name][2] = time.time()
+                        self.plugins_config['services'][service_name][2] = time.time()
 
                     else:
                         next_run_time = interval-(time.time() - last_check_time)
@@ -98,6 +98,7 @@ class SkynetAgent(object):
         self.handle()
 
     def register(self):
+
         print self.skynet_config.get('server','skynet_server_ip')
 
 if __name__ == '__main__':

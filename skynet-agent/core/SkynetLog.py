@@ -18,7 +18,7 @@ import os
 
 class skynetLog(object):
 
-    def __init__(self,object_name='skynetLog',file_log_level=logging.ERROR,console_log_level=logging.DEBUG,log_path='/data/gitlab/skynet/skynet-agent/logs/',log_filename='skynet-agent'):
+    def __init__(self,object_name='skynetLog',file_log_level=logging.ERROR,console_log_level=logging.DEBUG,log_path='/opt/gitlab/skynet/skynet-agent/logs/',log_filename='skynet-agent'):
         self.logger = logging.getLogger(os.path.basename(object_name))
         self.logger.setLevel(logging.DEBUG)
 

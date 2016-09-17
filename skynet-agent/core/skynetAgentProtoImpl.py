@@ -9,7 +9,7 @@ __author__ = 'whoami'
 @contact: skynet@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: skynet_agent_proto_impl.py
+@file: skynetAgentProtoImpl.py
 @time: 2015-12-27 下午2:06
 """
 
