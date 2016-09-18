@@ -16,9 +16,9 @@ import ConfigParser
 class SkynetConfig():
 
     def __init__(self,path):
-        self.path = path
+        self.__path = path
         self.cf = ConfigParser.ConfigParser()
-        self.cf.read(self.path)
+        self.cf.read(self.__path)
 
     def get(self,field,key):
         result =""
@@ -32,7 +32,7 @@ class SkynetConfig():
     def set(self, filed, key, value):
         try:
             self.cf.set(filed, key, value)
-            self.cf.write(open(self.path, 'w'))
+            self.cf.write(open(self.__path, 'w'))
         except:
             return False
         return True

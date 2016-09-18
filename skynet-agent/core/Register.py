@@ -28,7 +28,7 @@ class Register(object):
 
     host_ip,host_name = self.host_info.checkReverseLookup()
 
-    current_ping_port = self.config.get('agent','current_ping_port')
+    current_ping_port = self.config.get('agent','ping_port')
 
     register = { 'responseId'        : int(id),
                  'timestamp'         : timestamp,

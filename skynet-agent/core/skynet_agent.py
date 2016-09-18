@@ -15,25 +15,28 @@ __author__ = 'whoami'
 
 import pickle
 import threading
+from Register import Register
 import time
 from SkynetConfig import SkynetConfig
 from SkynetLog import skynetLog
 from skynetAgentProtoImpl import SkynetAgentProtoImpl
 import global_settings
 from plugins import plugin_api
+from conf import version
 
 log = skynetLog(object_name=__file__).log()
 
 class SkynetAgent(object):
 
-    def __init__(self,server_ip,server_port,skynet_config_path):
-        self.server_ip = server_ip
-        self.skynet_config = SkynetConfig(skynet_config_path)
+    def __init__(self,skynet_config):
+        self.__server_ip = skynet_config.get('server','skynet_server_ip')
+        self.__server_port = skynet_config.get('server','skynet_server_port')
+        self.reg = Register(skynet_config).build(version=version.VERSION)
         self.plugins_config = {}
-        self.skynet_agent = SkynetAgentProtoImpl(server_ip,server_port)
+        self.skynet_agent = SkynetAgentProtoImpl(self.__server_ip,self.__server_port)
 
     def get_configs(self):
-        config = self.skynet_agent.getConfigs('HostConfig::%s' % self.server_ip)
+        config = self.skynet_agent.getConfigs('HostConfig::%s' % self.reg['hostip'])
         if config:
             self.plugins_config = pickle.loads(config)  # pickle serializer
             return True
@@ -89,7 +92,7 @@ class SkynetAgent(object):
         result = func()
 
         self.report_service_data[service_name]={
-                                'ip':self.server_ip,
+                                'ip':self.__server_ip,
                                 'service_name':service_name,
                                 'data':result
                                 }
@@ -98,16 +101,14 @@ class SkynetAgent(object):
         self.handle()
 
     def register(self):
-
-        print self.skynet_config.get('server','skynet_server_ip')
+        print self.reg
 
 if __name__ == '__main__':
 
-    skynet_server_ip = '127.0.0.1'
-    skynet_server_port = 50051
-
     config_file_path = '../conf/skynet-site.ini'
 
-    agent = SkynetAgent(skynet_server_ip,skynet_server_port,config_file_path)
+    skynet_config = SkynetConfig(config_file_path)
+
+    agent = SkynetAgent(skynet_config)
     agent.register()
     agent.run()
