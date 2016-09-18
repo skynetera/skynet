@@ -26,7 +26,7 @@ class Register(object):
   def build(self, version, id='-1'):
     timestamp = int(time.time()*1000)
 
-    host_ip,host_name = self.host_info.checkReverseLookup()
+    host_name,host_ip = self.host_info.checkReverseLookup()
 
     current_ping_port = self.config.get('agent','ping_port')
 
@@ -34,7 +34,7 @@ class Register(object):
                  'timestamp'         : timestamp,
                  'hostname'          : host_name,
                  'hostip'            : host_ip,
-                 'currentPingPort'   : int(current_ping_port),
+                 'currentPingPort'   : current_ping_port,
                  'hardwareProfile'   : self.hardware.get(),
                  'agentVersion'      : version,
                  'hostInfo'           : self.host_info.get_os_info(),

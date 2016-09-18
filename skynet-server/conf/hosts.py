@@ -17,16 +17,16 @@ import templates
 
 g1 = templates.LinuxTemplate()
 g1.group_name = 'Linux Default Groups'
-g1.hosts = ['127.0.0.1']
+g1.hosts = ['127.0.0.1','192.168.0.196']
 
 g2 = templates.NetworkTemplate()
 g2.group_name = 'Linux Network Groups'
-g2.hosts = ['127.0.0.1','192.168.2.125','125.33.2.1']
+g2.hosts = ['127.0.0.1','192.168.0.196','192.168.2.125','125.33.2.1']
 
-monitored_default_groups = [
+monitored_groups = [
     g1,g2
 ]
 
-monitored_groups = [
-    g1
+monitored_network_groups = [
+    g2
 ]

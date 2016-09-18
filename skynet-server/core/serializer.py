@@ -42,7 +42,7 @@ def host_config_serializer(host_ip):
 
 def initialize_all_host_configs():
     applied_hosts = []
-    for group in hosts.monitored_default_groups:
+    for group in hosts.monitored_groups:
         applied_hosts.extend(group.hosts)
     applied_hosts = set(applied_hosts)
 
@@ -74,7 +74,7 @@ def report_service_data(service_instance,msg):
 def all_host_configs():
     configs = {'hosts':{}}
 
-    for group in hosts.monitored_default_groups:
+    for group in hosts.monitored_groups:
         for host_ip in group.hosts:
             configs['hosts'][host_ip] = {}
     return configs
@@ -82,3 +82,4 @@ def all_host_configs():
 if __name__ == '__main__':
     # host_config_serializer('192.168.2.125')
     print initialize_all_host_configs()
+    print all_host_configs()

@@ -39,11 +39,16 @@ class DataProcess(object):
 
         # received data
         for host,val in self.hosts['hosts'].items():
+
+            print '+++++++++++++++++++'
+            print host,val
+            print '+++++++++++++++++++'
+
             if val:
                 t = threading.Thread(target=self.process,args=[host,val])
                 t.start()
             else:
-                print '%s host monitor info is null...' %host
+                print '%s host monitor info is null...' % host
 
     def forward(self,msg):
         print '-------starting Processing data---------'

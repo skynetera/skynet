@@ -12,13 +12,14 @@
 """
 
 from core.skynet_agent import SkynetAgent
+from core.SkynetConfig import SkynetConfig
 
 if __name__ == '__main__':
 
-    skynet_server_ip = '127.0.0.1'
-    skynet_server_port = 50051
-
     config_file_path = '../conf/skynet-site.ini'
 
-    agent = SkynetAgent(skynet_server_ip,skynet_server_port,config_file_path)
+    skynet_config = SkynetConfig(config_file_path)
+
+    agent = SkynetAgent(skynet_config)
+    agent.register()
     agent.run()

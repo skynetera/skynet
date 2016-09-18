@@ -92,7 +92,7 @@ class SkynetAgent(object):
         result = func()
 
         self.report_service_data[service_name]={
-                                'ip':self.__server_ip,
+                                'ip':self.reg['hostip'],
                                 'service_name':service_name,
                                 'data':result
                                 }

@@ -49,11 +49,11 @@ class HostInfo(object):
         """
 
         os_info = {
-            'os_kernel'     : self.os_kernel,
-            'os_type'       : self.os_type,
-            'os_name'       : self.os_name,
-            'os_version'    : self.os_version,
-            'platform_type'      : self.platform_type,
+            'os_kernel'         : self.os_kernel,
+            'os_type'           : self.os_type,
+            'os_name'           : self.os_name,
+            'os_version'        : self.os_version,
+            'platform_type'     : self.platform_type,
         }
 
         return os_info
