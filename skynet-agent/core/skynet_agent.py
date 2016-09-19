@@ -19,7 +19,7 @@ from Register import Register
 import time
 from SkynetConfig import SkynetConfig
 from SkynetLog import skynetLog
-from skynetAgentProtoImpl import SkynetAgentProtoImpl
+from SkynetAgentProtoImpl import SkynetAgentProtoImpl
 import global_settings
 from plugins import plugin_api
 from conf import version
@@ -33,10 +33,10 @@ class SkynetAgent(object):
         self.__server_port = skynet_config.get('server','skynet_server_port')
         self.reg = Register(skynet_config).build(version=version.VERSION)
         self.plugins_config = {}
-        self.skynet_agent = SkynetAgentProtoImpl(self.__server_ip,self.__server_port)
+        self.skynet_agent_protoc = SkynetAgentProtoImpl(self.__server_ip,self.__server_port)
 
     def get_configs(self):
-        config = self.skynet_agent.getConfigs('HostConfig::%s' % self.reg['hostip'])
+        config = self.skynet_agent_protoc.getConfigs('HostConfig::%s' % self.reg['hostip'])
         if config:
             self.plugins_config = pickle.loads(config)  # pickle serializer
             return True
@@ -75,16 +75,15 @@ class SkynetAgent(object):
                     # print {'report_service_data::%s' %time.strftime('%Y%m%d%H%M') : self.report_service_data.values()}
                     # msg = self.format_msg('report_service_data::%s' %time.strftime('%Y%m%d%H%M'),self.report_service_data.values())
                     msg = self.format_msg('report_service_data::%s' %time.time(),self.report_service_data.values())
-                    flag = self.skynet_agent.push(msg)
+                    flag = self.skynet_agent_protoc.push(msg)
 
-                    try:
-                        if flag:
-                            log.info('\033[0;31;1m push>> push data success \033[0m')
-                            self.report_service_data.clear()
-                    except Exception,e:
-                        log.error('%s ==> %s' %('push data fail',e.message))
+                    if flag:
+                        log.info("Push data to skynet server success.")
+                        self.report_service_data.clear()
+                    else:
+                        log.error('Push data to skynet server fail.')
         else:
-            log.warn('could not found any configurations for this host....')
+            log.warn('Could not found any configurations for this host....')
 
     def task(self,service_name,plugin_name):
         log.info('going to run service: %s %s ' %(service_name,plugin_name))
@@ -101,7 +100,7 @@ class SkynetAgent(object):
         self.handle()
 
     def register(self):
-        print self.reg
+        self.skynet_agent_protoc.register(self.reg)
 
 if __name__ == '__main__':
 

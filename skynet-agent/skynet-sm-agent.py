@@ -16,7 +16,7 @@ from core.SkynetConfig import SkynetConfig
 
 if __name__ == '__main__':
 
-    config_file_path = '../conf/skynet-site.ini'
+    config_file_path = 'conf/skynet-site.ini'
 
     skynet_config = SkynetConfig(config_file_path)
 

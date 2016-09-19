@@ -15,6 +15,7 @@ __author__ = 'whoami'
 
 import skynet_core_pb2
 import serializer
+import pickle
 from data_process import DataProcess
 import time
 import grpc
@@ -41,16 +42,12 @@ class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
             return skynet_core_pb2.reply(reply_msg=host_config)
 
     def push(self, request, context):
-        message = request.request_msg
-        if message is not None:
-            self.data_process.forward(message)
-            return skynet_core_pb2.reply(reply_msg='push data success. time %s' % time.time())
-        else:
-            return skynet_core_pb2.reply(reply_msg='push data fail. time %s' % time.time())
+        self.data_process.forward(request.request_msg)
+        return skynet_core_pb2.reply(reply_msg='success')
 
     def register(self, request, context):
-        
-        pass
+        print pickle.loads(request.request_msg)
+        return skynet_core_pb2.reply(reply_msg='success')
 
 class SkynetServerProtoImpl(object):
     def __init__(self, ip, port):
