@@ -12,7 +12,9 @@
 """
 import os
 import commands
+from SkynetLog import SkynetLog
 
+log = SkynetLog(__file__).log()
 
 class Hardware():
     def __init__(self):
@@ -40,6 +42,7 @@ class Hardware():
                     disk = os.statvfs(mount_dir)
                     total = float(disk.f_bsize * disk.f_blocks / (1024 * 1024 * 1024))
 
+                    # disk space > 50GB , push to skynet server.
                     if total > 50:
 
                         value_dic['mounts'][mount_dir] = {
@@ -50,7 +53,7 @@ class Hardware():
                         pass
             return value_dic
         except IOError,e:
-            print(e)
+            log.error(e)
 
     def facterInfo(self):
         value_dic = {
@@ -76,14 +79,13 @@ class Hardware():
                 var = line.split(':')[1].split()[0]
                 mem[name] = long(var) / (1024.0*1024.0)   # memory Units GB
 
-
             # get cpu cores --> ls /sys/devices/system/cpu/|grep cpu[0-9]|wc -l
             status,result = commands.getstatusoutput('nproc --all')
 
             cpu_cores = None
 
             if status!=0:
-                print('get cpu_cores currently only works on X86/Power and some ARM CPUs. %s' %cpu_cores)
+                log.warn('get cpu_cores currently only works on X86/Power and some ARM CPUs. %s' %result)
             else:
                 cpu_cores = result
 

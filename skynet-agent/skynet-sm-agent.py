@@ -11,7 +11,7 @@
 @time: 2016-09-14 11:47
 """
 
-from core.skynet_agent import SkynetAgent
+from core.SkynetAgent import SkynetAgent
 from core.SkynetConfig import SkynetConfig
 
 if __name__ == '__main__':

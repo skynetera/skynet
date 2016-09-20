@@ -63,4 +63,4 @@ class SkynetServerProtoImpl(object):
             server.stop(0)
 
 if __name__ == '__main__':
-    SkynetServerProtoImpl('0.0.0.0',50051)
+    SkynetServerProtoImpl('0.0.0.0',7191)

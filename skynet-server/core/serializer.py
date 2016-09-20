@@ -69,7 +69,7 @@ def report_service_data(service_instance,msg):
 
     key = 'StatusData::%s' % host_ip
 
-    # waring data put redis 3 hour
+    # waring data process,clear service_instance data object
 
 def all_host_configs():
     configs = {'hosts':{}}

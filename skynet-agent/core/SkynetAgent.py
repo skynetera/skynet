@@ -9,7 +9,7 @@ __author__ = 'whoami'
 @contact: skyneteye@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: skynet_agent.py
+@file: SkynetAgent.py
 @time: 2015-11-28 下午12:44
 """
 
@@ -18,13 +18,13 @@ import threading
 from Register import Register
 import time
 from SkynetConfig import SkynetConfig
-from SkynetLog import skynetLog
+from SkynetLog import SkynetLog
 from SkynetAgentProtoImpl import SkynetAgentProtoImpl
 import global_settings
 from plugins import plugin_api
 from conf import version
 
-log = skynetLog(object_name=__file__).log()
+log = SkynetLog(object_name=__file__).log()
 
 class SkynetAgent(object):
 
@@ -57,11 +57,11 @@ class SkynetAgent(object):
                     interval,plugin_name,last_check_time = val
 
                     if time.time() - last_check_time >= interval:
-                        #need to check off the next run
+                        # need to check off the next run
                         t = threading.Thread(target=self.task,args=[service_name,plugin_name])
                         t.start()
 
-                        #update last check time
+                        # update last check time
                         self.plugins_config['services'][service_name][2] = time.time()
 
                     else:

@@ -16,7 +16,7 @@ import time
 
 if __name__ == '__main__':
 
-    skynet_master_ip,skynet_master_port='0.0.0.0',50051
+    skynet_master_ip,skynet_master_port='0.0.0.0',7191
 
     SkynetServer(skynet_master_ip,skynet_master_port)
 

@@ -17,9 +17,9 @@ __author__ = 'whoami'
 import grpc
 import skynet_core_pb2
 import pickle
-from SkynetLog import skynetLog
+from SkynetLog import SkynetLog
 
-log = skynetLog(__file__).log()
+log = SkynetLog(__file__).log()
 
 class SkynetAgentProtoImpl(object):
 
@@ -52,13 +52,15 @@ class SkynetAgentProtoImpl(object):
     def register(self,reg):
         if reg:
 
-            response = self.stub.register(skynet_core_pb2.call(request_msg=pickle.dumps(reg)))
+            try:
+                response = self.stub.register(skynet_core_pb2.call(request_msg=pickle.dumps(reg)))
 
-            if response.reply_msg == 'success':
-                log.info('Register to skynet server success.')
-            else:
-                log.error('Register to skynet server fail. %s' %response.reply_msg)
-
+                if response.reply_msg == 'success':
+                    log.info('Register to skynet server success.')
+                else:
+                    log.error('Register to skynet server fail. %s' %response.reply_msg)
+            except Exception,e:
+                log.error(e)
         else:
             log.warn('Register centent can not be empty.')
 

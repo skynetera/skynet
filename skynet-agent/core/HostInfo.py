@@ -12,9 +12,9 @@
 """
 import socket
 import platform
-from SkynetLog import skynetLog
+from SkynetLog import SkynetLog
 
-log = skynetLog(object_name=__file__).log()
+log = SkynetLog(object_name=__file__).log()
 
 class HostInfo(object):
 

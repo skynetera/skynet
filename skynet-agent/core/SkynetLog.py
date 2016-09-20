@@ -16,7 +16,7 @@ import logging
 import time
 import os
 
-class skynetLog(object):
+class SkynetLog(object):
 
     def __init__(self,object_name='skynetLog',file_log_level=logging.ERROR,console_log_level=logging.DEBUG,log_path='/opt/gitlab/skynet/skynet-agent/logs/',log_filename='skynet-agent'):
         self.logger = logging.getLogger(os.path.basename(object_name))
@@ -48,7 +48,7 @@ class skynetLog(object):
 
 if __name__ == "__main__":
 
-    logger = skynetLog(object_name='examples_test').log()
+    logger = SkynetLog(object_name='examples_test').log()
 
     # 'application' code
     logger.debug('debug message')

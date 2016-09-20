@@ -69,6 +69,5 @@ def monitor(frist_invoke=2):
 
         return value_dic
 
-
 if __name__ == '__main__':
     print monitor()
