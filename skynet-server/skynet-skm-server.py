@@ -7,7 +7,7 @@
 @contact: skynet199@foxmail.com
 @site: http://www.itweet.cn
 @software: PyCharm
-@file: skynet-sm-server.py
+@file: skynet-skm-server.py
 @time: 2016-09-14 12:02
 """
 

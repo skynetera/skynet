@@ -38,11 +38,11 @@ class SkynetConfig():
         return True
 
 if __name__ == '__main__':
-    config_file_path = '../conf/skynet-site.ini'
+    config_file_path = '../conf/config.ini'
     sc = SkynetConfig(path=config_file_path)
-    print sc.get('server','skynet_server_ip')
-    print sc.set('agent','logdir','/var/log/skynet-agent')
+    print sc.get('General','server_host')
+    # print sc.set('General','server_thread_pool_max_workers','60')
 
     print sc.cf.sections()     # ['server', 'agent']
-    print sc.cf.options("server")
-    print sc.cf.items('server')
+    print sc.cf.options("General")
+    print sc.cf.items('General')
