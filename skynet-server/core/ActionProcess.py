@@ -9,18 +9,18 @@ __author__ = 'whoami'
 @contact: skutil@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: action_process.py
+@file: ActionProcess.py
 @time: 2015-11-28 下午3:06
 """
 
 import pickle
-import serializer
+import Serializer
 
 def action_process(server_instance,func_name,time,data):
 
     for msg in data:
         msg['timestamp'] = time
 
-        func = getattr(serializer,func_name)
+        func = getattr(Serializer, func_name)
 
         func(server_instance,msg)

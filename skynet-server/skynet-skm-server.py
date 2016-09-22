@@ -11,7 +11,7 @@
 @time: 2016-09-14 12:02
 """
 
-from core.skynet_server import SkynetServer
+from core.SkynetServer import SkynetServer
 import time
 
 if __name__ == '__main__':

@@ -9,14 +9,14 @@ __author__ = 'whoami'
 @contact: skynet@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: rrdtool.py
+@file: Rrdtool.py
 @time: 2016-01-05 上午9:31
 """
 import commands
 import time
 import random
 
-import hashrgb
+import Hashrgb
 
 
 class rrdtool(object):
@@ -100,7 +100,7 @@ class rrdtool(object):
         for arg in args:
             i+=1
             defv.append('DEF:value%s=%s.rrd:%s:AVERAGE ' %(i,self.rrd_path+'/'+host_ip,arg))
-            defb.append('LINE2:'+'value'+str(i)+''+ hashrgb.str2rgb2(str(arg))+':" ' +arg+ ' "  GPRINT:value1:LAST:"当前\:%8.0lf" GPRINT:value1:AVERAGE:"平均\:%8.0lf" GPRINT:value1:MAX:"最大\:%8.0lf"  GPRINT:value1:MIN:"最小\:%8.0lf"  COMMENT:" \\n" '.replace('value1','value'+str(i)))
+            defb.append('LINE2:' +'value' + str(i) +'' + Hashrgb.str2rgb2(str(arg)) + ':" ' + arg + ' "  GPRINT:value1:LAST:"当前\:%8.0lf" GPRINT:value1:AVERAGE:"平均\:%8.0lf" GPRINT:value1:MAX:"最大\:%8.0lf"  GPRINT:value1:MIN:"最小\:%8.0lf"  COMMENT:" \\n" '.replace('value1', 'value' + str(i)))
         else:
             result_1h = commands.getstatusoutput('rrdtool graph '+str(self.rrd_path+'/'+host_ip+'_'+png_name)+'_1h.png -c SHADEA#DDDDDD -c SHADEB#808080 -c FRAME#006600 -c FONT#555555 -c ARROW#bfbfbf -c AXIS#bfbfbf -c BACK#ffffff -c CANVAS#ffffff ' \
                   '-c MGRID#f5caca -c GRID#d6d6d6    --start now-1h --title "System Load Average" --upper-limit 1 --lower-limit 2 --x-grid MINUTE:1:MINUTE:20:MINUTE:20:0:"%H:%M" -Y -X 0 ' \

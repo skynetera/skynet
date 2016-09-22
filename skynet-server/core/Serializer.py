@@ -9,7 +9,7 @@ __author__ = 'whoami'
 @contact: skutil@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: serializer.py
+@file: Serializer.py
 @time: 2015-11-28 上午12:17
 """
 import pickle

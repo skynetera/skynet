@@ -9,7 +9,7 @@ __author__ = 'whoami'
 @contact: skynet@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: hashrgb.py
+@file: Hashrgb.py
 @time: 2016-01-08 上午2:37
 """
 

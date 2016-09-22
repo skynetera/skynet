@@ -9,11 +9,11 @@ __author__ = 'whoami'
 @contact: skutil@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: skynet_server.py
+@file: SkynetServer.py
 @time: 2015-11-28 下午3:04
 """
 
-from skynet_server_proto_impl import SkynetServerProtoImpl
+from SkynetServerProtoImpl import SkynetServerProtoImpl
 import time
 
 class SkynetServer(object):

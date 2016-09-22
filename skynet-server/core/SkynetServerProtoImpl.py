@@ -9,14 +9,14 @@ __author__ = 'whoami'
 @contact: skynet@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: skynet_server_proto_impl.py
+@file: SkynetServerProtoImpl.py
 @time: 2015-12-27 下午1:35
 """
 
 import skynet_core_pb2
-import serializer
+import Serializer
 import pickle
-from data_process import DataProcess
+from DataProcess import DataProcess
 import time
 import grpc
 from concurrent import futures
@@ -25,7 +25,7 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
     def __init__(self):
-        self.conf = serializer.initialize_all_host_configs()
+        self.conf = Serializer.initialize_all_host_configs()
         self.data_process = DataProcess()
         print '[INFO] Init configs info...'
 
