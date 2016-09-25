@@ -35,5 +35,20 @@ def main():
             break
     thread.join()
 
+def test_finnaly():
+    try:
+        t = open('abc.txt')
+        return 'abc'
+    except IOError,e:
+        print e
+    finally:
+        if t is not None:
+            print 'is not none'
+            t.close()
+        else:
+            print 'is none'
+        print 'return exec...'
+
 if __name__ == '__main__':
-    main()
+    # main()
+    print test_finnaly()

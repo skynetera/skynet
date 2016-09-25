@@ -18,6 +18,8 @@ import grpc
 import skynet_core_pb2
 import pickle
 from SkynetLog import SkynetLog
+import json
+import os
 
 log = SkynetLog(__file__).log()
 
@@ -49,16 +51,28 @@ class SkynetAgentProtoImpl(object):
     def jobs(self,task):
         pass
 
-    def register(self,reg):
-        if reg:
-
+    def register(self,reg_data):
+        if reg_data:
             try:
-                response = self.stub.register(skynet_core_pb2.call(request_msg=pickle.dumps(reg)))
-
-                if response.reply_msg == 'success':
-                    log.info('Register to skynet server success.')
+                if os.path.exists('/opt/rrd_data/reg_id.json'):
+                    pass
                 else:
-                    log.error('Register to skynet server fail. %s' %response.reply_msg)
+                    response = self.stub.register(skynet_core_pb2.call(request_msg=pickle.dumps(reg_data)))
+
+                    if response.reply_msg == 'success':
+                        try:
+                            reg_json = open('/opt/rrd_data/reg_id.json','w')
+                            json.dump(reg_data, reg_json)
+                            log.info('Register to skynet server success.')
+                        except IOError,e:
+                            print e
+                            log.error('Generate reg_id fail. %s' %e)
+                        finally:
+                            if reg_json is not None:
+                                reg_json.close()
+                    else:
+                        log.error('Register to skynet server fail. %s' %response.reply_msg)
+
             except Exception,e:
                 log.error(e)
         else:

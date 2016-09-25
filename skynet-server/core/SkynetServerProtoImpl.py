@@ -21,6 +21,7 @@ import time
 import grpc
 from concurrent import futures
 
+
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
@@ -46,7 +47,7 @@ class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
         return skynet_core_pb2.reply(reply_msg='success')
 
     def register(self, request, context):
-        print pickle.loads(request.request_msg)
+        Serializer.register(request.request_msg)
         return skynet_core_pb2.reply(reply_msg='success')
 
 class SkynetServerProtoImpl(object):

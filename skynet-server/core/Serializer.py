@@ -16,6 +16,7 @@ import pickle
 
 import global_settings
 from conf import hosts
+from common import RegisterUtil
 
 
 def host_config_serializer(host_ip):
@@ -78,6 +79,10 @@ def all_host_configs():
         for host_ip in group.hosts:
             configs['hosts'][host_ip] = {}
     return configs
+
+def register(reg_data):
+    print pickle.loads(reg_data)
+    RegisterUtil.set(pickle.loads(reg_data))
 
 if __name__ == '__main__':
     # host_config_serializer('192.168.2.125')

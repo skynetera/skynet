@@ -18,9 +18,9 @@ import os
 
 class SkynetLog(object):
 
-    def __init__(self,object_name='skynetLog',file_log_level=logging.ERROR,console_log_level=logging.DEBUG,log_path='/opt/gitlab/skynet/skynet-agent/logs/',log_filename='skynet-agent'):
+    def __init__(self,object_name='skynetLog',file_log_level=logging.INFO,console_log_level=logging.DEBUG,log_path='/opt/rrd_data/',log_filename='skynet-sm-server'):
         self.logger = logging.getLogger(os.path.basename(object_name))
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
 
         # create file handler which logs even debug messages
         fh = logging.FileHandler('%s%s-%s.log' %(log_path,log_filename,time.strftime('%Y%m%d')))
