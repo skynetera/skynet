@@ -8,15 +8,11 @@
 @site: http://www.itweet.cn
 @software: PyCharm
 @file: __init__.py.py
-@time: 2016-09-12 17:35
+@time: 2016-10-28 上午12:14
 """
 
 
-def func():
-    pass
-
-
-class Main():
+class main():
     def __init__(self):
         pass
 
