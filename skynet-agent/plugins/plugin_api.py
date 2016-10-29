@@ -13,7 +13,7 @@ __author__ = 'whoami'
 @time: 2015-11-28 下午1:52
 """
 
-import cpu,loadavg,memory,disk,netstats,swap,iostats
+from linux import cpu,disk,iostats,loadavg,memory,netstats,swap
 
 def get_load_info():
     return loadavg.monitor()
