@@ -13,8 +13,9 @@ __author__ = 'whoami'
 @time: 2015-11-26 下午8:47
 """
 
+from AlertsBot import avg,hit, capacity,size
+
 import generic
-from data_process import avg,hit,last,capacity,size
 
 '''
     python operator models (lt,le,eq,ne,ge,gt)

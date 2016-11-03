@@ -13,38 +13,36 @@ __author__ = 'whoami'
 @time: 2015-11-28 下午1:53
 """
 import os
+import psutil
 
 def monitor(frist_invoke=1):
     value_dic = {
-        'mount':{},
+            'disk': {}
     }
 
-    f = open('/etc/fstab')
-    lines = f.readlines()
-    f.close()
+    for part in psutil.disk_partitions(all=False):
+        if os.name == 'nt':
+            if 'cdrom' in part.opts or part.fstype == '':
+                # skip cd-rom drives with no disk in it; they may raise
+                # ENOENT, pop-up a Windows GUI error for a non-ready
+                # partition or just hang.
+                continue
+        mount_point = part.mountpoint
+        device =  part.device
+        usage = psutil.disk_usage(part.mountpoint)
+        value_dic['disk'][mount_point] = {
+            'disk.device':device,
+            'disk.mount_point':mount_point,
+            'disk.total':usage.total/(1024*1024),
+            'disk.used':usage.used/(1024*1024),
+            'disk.free':usage.free/(1024*1024),
+            'disk.percent': usage.percent,
+            'disk.type':part.fstype,
+        }
 
-    for line in lines:
-        if '#' not in line and 'ext' in line or 'xfs' in line:
-            mount_dir = line.split()[1]
-            type = line.split()[2]
-
-            disk = os.statvfs(mount_dir)
-            total = float(disk.f_bsize * disk.f_blocks/(1024*1024))
-            used = total-float(disk.f_bsize * disk.f_bfree/(1024*1024))
-            free = float(disk.f_bsize * disk.f_bavail/(1024*1024))
-
-            value_dic['mount'][mount_dir] = {
-                'disk_device':mount_dir,
-                'disk_total':total,
-                'disk_used':used,
-                'disk_free':free,
-                'disk_percent': round((float(used/total)*100),2),
-                'disk_type':type,
-            }
     return value_dic
 
 if __name__ == '__main__':
     mount = monitor()
-    print mount
-    for m in mount['mount'].keys():
-        print m,mount['mount'][m]
+    for m in mount['disk'].keys():
+        print m,mount['disk'][m]

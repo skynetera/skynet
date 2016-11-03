@@ -17,15 +17,15 @@ import ActionProcess
 import Serializer
 import pickle
 import threading,os
+import datetime
 import global_settings
-from graph import Rrdtool
+from db import InfluxdbClient
 
 class DataProcess(object):
 
     def __init__(self):
         self.hosts = Serializer.all_host_configs()
-        self.rrd_path = '/opt/rrd_data'
-        self.rrdtool = Rrdtool.rrdtool(self.rrd_path)
+        self.db = InfluxdbClient.InfluxdbClient()
 
     def handle(self,msg):
         # print 'recv:',msg
@@ -50,30 +50,19 @@ class DataProcess(object):
         self.handle(msg)
 
     def process(self,host,val):
+
         print 'Task %s runs pid %s' % (host,os.getpid())
 
-        args = []
-        data = ''
-        for k in val.values():
-            timestamp = k['timestamp']
-            if len(k['data'].keys()) > 1:
-                for s,e in k['data'].items():
-                    args.append(s)
-                    data += str(e)+':'
-        else:
-            if os.path.exists(self.rrd_path+'/%s.rrd' %host):
-                pass
-            else:
-                try:
-                    self.rrdtool.create(host,*args)
-                except Exception,e:
-                    print 'create rrd database fail...%s' % e.message
+        tags = {
+                    "host": "%s" % host,
+                    "region": "us-west"
+        }
 
-            data = timestamp+':'+data[:-1]
-            print self.rrdtool.updatev(host,data,*args)
+        print val.values()
 
-        for k,v in val.items():
-
-            if len(v['data'].keys()) > 1:
-                args = v['data'].keys()
-                print self.rrdtool.graph(str(host),str(k),'服务器%s统计信息'%k,str(k),*args)
+        for v in val.values():
+            timestamp = float(v['timestamp'])
+            time = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+            measurement = v['data'].keys()[0]
+            data = v['data'].values()[0]
+            self.db.wirte_points(tags,measurement,time,data)

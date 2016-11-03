@@ -13,8 +13,10 @@ __author__ = 'whoami'
 @time: 2015-11-28 上午12:54
 """
 
+from AlertsBot import avg
+
 import generic
-from data_process import avg,hit,last
+
 
 class nic(generic.BaseService):
     def __init__(self):

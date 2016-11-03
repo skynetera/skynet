@@ -12,28 +12,21 @@ __author__ = 'whoami'
 @file: memory.py
 @time: 2015-11-28 下午1:51
 """
+import psutil
 
 def monitor(frist_invoke=1):
-    mem = {}
 
-    f = open("/proc/meminfo")
-    lines = f.readlines()
-    f.close()
-    for line in lines:
-        if len(line) < 2: continue
-        name = line.split(':')[0]
-        var = line.split(':')[1].split()[0]
-        mem[name] = long(var) / (1024.0)
-
-    mem['MemUsed'] = mem['MemTotal'] - mem['MemFree'] - mem['Buffers'] - mem['Cached']
+    mem = psutil.virtual_memory()
 
     value_dic = {
-        'mem_total':round(mem['MemTotal'],2),
-        'mem_free':round(mem['MemFree'],2),
-        'mem_buffers':round(mem['Buffers'],2),
-        'mem_cache':round(mem['Cached'],2),
-        'mem_used':round((mem['MemTotal'] - mem['MemFree']),2),
-        'mem_percent': round((mem['MemUsed'])/(mem['MemTotal']),2)*100
+        'memory': {
+            'mem.total': int(mem.total/(1024*1024)),
+            'mem.free': int(mem.free/(1024*1024)),
+            'mem.buffers': int(mem.buffers/(1024*1024)),
+            'mem.cache': int(mem.cached/(1024*1024)),
+            'mem.used': int(mem.used/(1024*1024)),
+            'mem.percent': mem.percent
+        }
     }
 
     return value_dic

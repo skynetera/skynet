@@ -19,9 +19,11 @@ def monitor(frist_invoke=1):
     f.close()
 
     value_dic = {
-        'load_1min':load[0],
-        'load_5min':load[1],
-        'load_15min':load[2],
+        'loadavg': {
+            'load.1min':load[0],
+            'load.5min':load[1],
+            'load.15min':load[2],
+        }
     }
 
     return value_dic

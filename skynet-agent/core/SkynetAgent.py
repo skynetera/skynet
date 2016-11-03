@@ -76,7 +76,6 @@ class SkynetAgent(object):
                     # msg = self.format_msg('report_service_data::%s' %time.strftime('%Y%m%d%H%M'),self.report_service_data.values())
                     msg = self.format_msg('report_service_data::%s' %time.time(),self.report_service_data.values())
                     flag = self.skynet_agent_protoc.push(msg)
-
                     if flag:
                         log.info("Push data to skynet server success.")
                         self.report_service_data.clear()
