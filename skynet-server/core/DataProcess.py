@@ -58,11 +58,12 @@ class DataProcess(object):
                     "region": "us-west"
         }
 
-        print val.values()
-
         for v in val.values():
             timestamp = float(v['timestamp'])
             time = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
             measurement = v['data'].keys()[0]
             data = v['data'].values()[0]
             self.db.wirte_points(tags,measurement,time,data)
+
+        # clear service_instance data object
+        self.hosts['hosts'][host].clear()

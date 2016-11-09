@@ -65,17 +65,6 @@ if __name__ == '__main__':
             "fields": {
                 "value": 0.64
             }
-        },
-        {
-            "measurement": "cpu_load",
-            "tags": {
-                "host": "server01",
-                "region": "us-west"
-            },
-            "time": "2007-11-10T23:00:00Z",
-            "fields": {
-                "value": 0.64
-            }
         }
     ]
     db = InfluxDBClient()
