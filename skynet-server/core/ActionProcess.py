@@ -14,13 +14,13 @@ __author__ = 'whoami'
 """
 
 import pickle
-import Serializer
+import Tools
 
 def action_process(server_instance,func_name,time,data):
 
     for msg in data:
         msg['timestamp'] = time
 
-        func = getattr(Serializer, func_name)
+        func = getattr(Tools, func_name)
 
         func(server_instance,msg)

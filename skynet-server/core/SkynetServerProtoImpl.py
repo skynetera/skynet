@@ -14,7 +14,7 @@ __author__ = 'whoami'
 """
 
 import skynet_core_pb2
-import Serializer
+import Tools
 import pickle
 from DataProcess import DataProcess
 import time
@@ -26,7 +26,7 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
     def __init__(self):
-        self.conf = Serializer.initialize_all_host_configs()
+        self.conf = Tools.initialize_all_host_configs()
         self.data_process = DataProcess()
         print '[INFO] Init configs info...'
 
@@ -47,7 +47,7 @@ class SkynetServerProto(skynet_core_pb2.SkynetProtoServicer):
         return skynet_core_pb2.reply(reply_msg='success')
 
     def register(self, request, context):
-        Serializer.register(request.request_msg)
+        Tools.register(request.request_msg)
         return skynet_core_pb2.reply(reply_msg='success')
 
 class SkynetServerProtoImpl(object):

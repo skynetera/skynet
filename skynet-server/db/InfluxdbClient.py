@@ -34,20 +34,20 @@ class InfluxdbClient(object):
         if type(data.values()[0])==dict:
             json_body = []
             for v in data.values():
+                v['localtime'] = time
                 json_obj = {
                         "measurement": "%s" % measurement,
                         "tags": tags,
-                        "time": "%s" % time,
                         "fields": v
                     }
                 json_body.append(json_obj)
             self.client.write_points(json_body)
         else:
+            data['localtime'] = time
             json_body = [
                 {
                     "measurement": "%s" % measurement,
                     "tags": tags,
-                    "time": "%s" %time,
                     "fields": data
                 }
             ]
@@ -61,9 +61,18 @@ if __name__ == '__main__':
                 "host": "server01",
                 "region": "us-west"
             },
-            "time": "2008-11-10T23:00:00Z",
             "fields": {
                 "value": 0.64
+            }
+        },
+        {
+            "measurement": "cpu_load",
+            "tags": {
+                "host": "server02",
+                "region": "us-west"
+            },
+            "fields": {
+                "value": 0.68
             }
         }
     ]

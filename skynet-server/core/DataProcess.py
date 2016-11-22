@@ -14,7 +14,7 @@ __author__ = 'whoami'
 """
 
 import ActionProcess
-import Serializer
+import Tools
 import pickle
 import threading,os
 import datetime
@@ -24,7 +24,7 @@ from db import InfluxdbClient
 class DataProcess(object):
 
     def __init__(self):
-        self.hosts = Serializer.all_host_configs()
+        self.hosts = Tools.all_host_configs()
         self.db = InfluxdbClient.InfluxdbClient()
 
     def handle(self,msg):
