@@ -1,12 +1,13 @@
 # skynet
 
-* roadmap
- - hadoop 
- - kuberneter 
- - openstack
- - ceph
- - glusterfs
- - docker-machine
+* Roadmap
+ - Hadoop
+ - HAWQ
+ - Hive
+ - Spark
+ - SearchDB
+ - R
+ - Hbase
 
 * rrdtool ubuntu install
    - http://martybugs.net/linux/rrdtool/
